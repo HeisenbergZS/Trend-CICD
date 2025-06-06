@@ -9,11 +9,18 @@ pipeline {
     stage('Clone Repo') {
       steps {
         git branch: 'master', url: 'https://github.com/HeisenbergZS/Trend-CICD.git'
+
+        // ✅ Debug to check folder structure
+        sh 'echo "=== Workspace Structure ==="'
+        sh 'ls -l'
+        sh 'echo "=== Trend Directory Contents ==="'
+        sh 'ls -l Trend'
       }
     }
 
     stage('Build Docker Image') {
       steps {
+        // ✅ Build Docker image from Trend directory
         sh 'docker build -t $IMAGE_NAME ./Trend'
       }
     }
@@ -29,7 +36,7 @@ pipeline {
       }
     }
 
-    // We'll add Kubernetes deploy stage later after EKS is ready
+    // 🔜 Kubernetes deployment can be added here after EKS setup
   }
 }
 
